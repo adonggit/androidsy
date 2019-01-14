@@ -1,0 +1,125 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.king.wanandroidzzw"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
+
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a'//, 'x86', 'x86_64', 'arm64-v8a'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //support
+    implementation deps.support.v4
+    implementation deps.support.design
+    implementation deps.support.appcompat
+    implementation deps.support.recyclerview
+    implementation deps.support.cardview
+    implementation deps.support.constraintlayout
+    //lifecycle
+    implementation deps.lifecycle.runtime
+    implementation deps.lifecycle.extensions
+    annotationProcessor deps.lifecycle.compiler
+    //room
+    implementation deps.room.runtime
+    annotationProcessor deps.room.compiler
+    implementation deps.room.rxjava2
+    //dagger
+    implementation deps.dagger.dagger
+    implementation deps.dagger.android
+    implementation deps.dagger.android_support
+    annotationProcessor deps.dagger.android_processor
+    annotationProcessor deps.dagger.compiler
+    //retrofit
+    implementation deps.retrofit.retrofit
+    implementation deps.retrofit.gson
+    implementation deps.retrofit.converter_gson
+    //glide
+    implementation deps.glide.glide
+    annotationProcessor deps.glide.compiler
+    //jenly
+    implementation deps.jenly.base_adapter
+    implementation deps.jenly.base_util
+    implementation deps.jenly.superslidingpanelayout
+    implementation deps.jenly.superswiperefreshlayout
+    implementation deps.jenly.supertextview
+    implementation deps.jenly.flutteringlayout
+    implementation deps.jenly.app_updater
+    implementation deps.jenly.app_dialog
+    implementation deps.jenly.nevercrash
+    //log
+    implementation deps.timber
+    //banner
+    implementation deps.banner
+    //web
+    implementation deps.agentweb
+    //router
+    api deps.arouter.arouter
+    annotationProcessor deps.arouter.compiler
+    //leakCanary
+    debugImplementation deps.leakcanary.debug
+    releaseImplementation deps.leakcanary.release
+    //cookie
+    implementation deps.cookie_jar
+    //flow layout
+    implementation deps.flowlayout
+    //status bar
+    implementation deps.status_bar
+    //多dex
+    implementation deps.multidex
+    // bugly
+    implementation deps.bugly
+    // tinker
+    implementation deps.tinker
+
+    implementation 'com.github.adonggit:CasePackage:1.76'
+}
+
+
+
+if(Boolean.parseBoolean(rootProject.ext.tinkerEnabled)){
+    apply from: 'tinker-support.gradle'
+}
+
